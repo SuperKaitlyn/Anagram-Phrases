@@ -20,21 +20,21 @@ user_name = input('Enter your name: ')
 
 def find_anagrams(name, word_list):
     """read name and dictionary file & display all anagrams in name"""
-    nln = Counter(name)
+    nlm = Counter(name)
     anagrams = []
     for word in word_list:
         test = ''
-        wlm = Counter(word).lower
+        wlm = Counter(word.lower())
         for letter in word:
-            if wlm[letter] < nln[letter]:
+            if wlm[letter] <= nlm[letter]:
                 test += letter
-            if Counter(test) == wlm:
-                anagrams.append(word)
-        print(*anagrams, sep='\n')
-        print()
-        print(f"Remaining letters = {name}")
-        print(f"Number of remaining letters = {len(name)}")
-        print(f"Number of remaining real word anagrams = {len(anagrams)}")
+        if Counter(test) == wlm:
+            anagrams.append(word)
+    print(*anagrams, sep='\n')
+    print()
+    print(f"Remaining letters = {name}")
+    print(f"Number of remaining letters = {len(name)}")
+    print(f"Number of remaining real word anagrams = {len(anagrams)}")
 
 def process_choice(name):
 
@@ -48,7 +48,7 @@ def process_choice(name):
             candidate = ''.join(choice.lower().split())
         left_over_list = list(name)
         for letter in candidate:
-            if letter not in left_over_list:
+            if letter in left_over_list:
                 left_over_list.remove(letter)
         if len(name) - len(left_over_list) == len(candidate):
             break
@@ -74,6 +74,26 @@ def main():
             print(f"Length of anagram phrase = {len(temp_phrase)}")
 
             find_anagrams(name, dictionary)
-            print(current)
+            print("Current anagram phrase =", end = " ")
+            print(phrase)
+
+            choice, name = process_choice(name)
+            phrase += choice + ' '
+
+        elif len(temp_phrase) == limit:
+            print("\n *** FINISHED!***\n")
+            print("Anagram of name = ", end = " ")
+            print(phrase)
+            print()
+            try_again = input('\n\nTry Again? (Press Enter else "n" to quit) \n')
+            if try_again.lower() == 'n':
+                running = False
+                exit()
+            else:
+                main()
+
+if __name__ == '__main__':
+    main()
+
 
 
