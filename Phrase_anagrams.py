@@ -15,7 +15,7 @@ dictionary.append('i')
 dictionary = sorted(dictionary)
 #Allows one letter words like 'a' and 'I' to be used in the name
 
-user_name = input('Enter your name: ')
+user_name = input('Enter A name: ')
 #Collecting the users name
 
 def find_anagrams(name, word_list):
